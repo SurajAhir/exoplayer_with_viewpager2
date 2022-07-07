@@ -97,6 +97,54 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         super.onViewDetachedFromWindow(holder);
     }
 
+    /* for lowest version
+
+      @Override
+    public void onViewAttachedToWindow(@NonNull MyViewHolder holder) {
+        Log.d("TAGA", "attached" + holder.getAdapterPosition());
+        if (!MyData.hashMap.isEmpty()) {
+            ExoplayerItem item = MyData.hashMap.put.get(holder.getAdapterPosition());
+            assert item != null;
+            ExoPlayer exoPlayer = item.getExoPlayer();
+            exoPlayer.prepare(item.getMediaSource());
+            holder.exoPlayerView.setPlayer(item.getExoPlayer());
+            exoPlayer.addListener(new Player.EventListener() {
+                @Override
+                public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                    if (playbackState == Player.STATE_BUFFERING) {
+                        holder.progressBar.setVisibility(View.VISIBLE);
+                    } else if (playbackState == Player.STATE_READY) {
+                        holder.progressBar.setVisibility(GONE);
+                    }else if (playbackState==Player.STATE_ENDED ){
+                        exoPlayer.seekTo(0);
+                        exoPlayer.setPlayWhenReady(true);
+                    }
+                }
+
+                @Override
+                public void onPlayerError(ExoPlaybackException error) {
+                    Player.EventListener.super.onPlayerError(error);
+                    Log.d("TAG","error"+ error.getLocalizedMessage());
+                }
+            });
+            item.getExoPlayer().setPlayWhenReady(true);
+        }
+        super.onViewAttachedToWindow(holder);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull MyViewHolder holder) {
+        Log.d("TAGA", "detatched" + holder.getAdapterPosition());
+        ExoplayerItem item = MyData.hashMap.put.get(holder.getAdapterPosition());
+        item.getExoPlayer().setPlayWhenReady(false);
+        for (Map.Entry<Integer,ExoplayerItem> entry:MyData.hashMap.put.entrySet()){
+            if(entry.getValue().getExoPlayer().isPlaying()){
+                entry.getValue().getExoPlayer().setPlayWhenReady(false);
+            }
+        }
+        super.onViewDetachedFromWindow(holder);
+    }
+     */
 
     @Override
     public int getItemCount() {
@@ -109,6 +157,16 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
         ExoPlayer exoPlayer= new ExoPlayer.Builder(context).build();
         MediaSource mediaSource;
         DefaultDataSourceFactory defaultDataSourceFactory = new DefaultDataSourceFactory(context);
+
+        /* this code for lowest version of exoplayer
+         SimpleExoPlayerView myvideoView;
+        MediaSource mediaSource;
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
+        ExoPlayer exoPlayer = ExoPlayerFactory.newSimpleInstance(con, trackSelector);
+        DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
+        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+         */
         public ViewPagerViewHolder(@NonNull View itemView) {
             super(itemView);
             progressBar = itemView.findViewById(R.id.progressBar_viewpager);
@@ -126,5 +184,31 @@ public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.View
 
 
         }
+
+        /* for lowest version
+         void setVideoPath(String url) {
+            if(MyData.INSTANCE.getHashMap().isEmpty()){
+                try {
+                    Uri videouri = Uri.parse(url);
+                    mediaSource = new ExtractorMediaSource(videouri, dataSourceFactory, extractorsFactory, null, null);
+                    Log.d("TAGA",getAdapterPosition()+""+url);
+                    MyData.hashMap.put(getAdapterPosition(),new ExoplayerItem(exoPlayer,getAdapterPosition(),mediaSource));
+                } catch (Exception e) {
+                    Log.e("TAG", "Error : " + e.toString());
+                }
+            }else if (MyData.INSTANCE.getHashMap().get(getAdapterPosition())==null){
+                try {
+                    Uri videouri = Uri.parse(url);
+                    mediaSource = new ExtractorMediaSource(videouri, dataSourceFactory, extractorsFactory, null, null);
+                    Log.d("TAGA",getAdapterPosition()+""+url);
+                    MyData.hashMap.put(getAdapterPosition(),new ExoplayerItem(exoPlayer,getAdapterPosition(),mediaSource));
+                } catch (Exception e) {
+                    Log.e("TAG", "Error : " + e.toString());
+                }
+            }
+
+        }
+
+         */
     }
 }

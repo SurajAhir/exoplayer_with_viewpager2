@@ -188,6 +188,26 @@
        android:layout_height="match_parent"
        app:use_controller="false" />
 
+   <!--to use this add the following dependencies
+      implementation 'com.google.android.exoplayer:exoplayer:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-core:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:r2.4.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:r2.4.0'
+    -->
+<!--   <com.google.android.exoplayer2.ui.SimpleExoPlayerView-->
+<!--       android:id="@+id/exoPlayerView"-->
+<!--       android:layout_width="match_parent"-->
+<!--       android:layout_height="match_parent"-->
+<!--       app:use_controller="false"-->
+<!--       app:layout_constraintBottom_toBottomOf="parent"-->
+<!--       app:layout_constraintEnd_toEndOf="parent"-->
+<!--       app:layout_constraintHorizontal_bias="0.0"-->
+<!--       app:layout_constraintStart_toStartOf="parent"-->
+<!--       app:layout_constraintTop_toTopOf="parent"-->
+<!--       app:layout_constraintVertical_bias="1.0"/>-->
+
 
    <ProgressBar
        android:id="@+id/progressBar_viewpager"
